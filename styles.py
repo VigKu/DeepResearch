@@ -316,6 +316,22 @@ body { background: var(--dr-bg, #fafaf7); }
 #dr-report ul, #dr-report ol { padding-left: 1.5rem; }
 #dr-report li { margin: 0.3rem 0; line-height: 1.6; }
 
+#dr-file {
+    margin-top: 1.25rem !important;
+    border: 1.5px solid var(--dr-line) !important;
+    background: var(--dr-surface) !important;
+    border-radius: 0 !important;
+    padding: 0.75rem 1rem !important;
+}
+
+#dr-file label, #dr-file .label-wrap {
+    font-family: ui-monospace, SFMono-Regular, monospace !important;
+    font-size: 0.65rem !important;
+    letter-spacing: 0.2em !important;
+    text-transform: uppercase !important;
+    color: var(--dr-muted) !important;
+}
+
 #dr-report table {
     border-collapse: collapse;
     border: 1.5px solid var(--dr-line);

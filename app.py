@@ -7,8 +7,14 @@ load_dotenv(override=True)
 
 
 async def run(query: str):
+    file_update = gr.update(value=None, visible=False)
     async for status_update in ResearchManager().run(query):
-        yield status_update
+        if isinstance(status_update, tuple):
+            markdown_report, path = status_update
+            file_update = gr.update(value=path, visible=True)
+            yield markdown_report, file_update
+        else:
+            yield status_update, file_update
 
 
 with gr.Blocks(title="Deep Research") as ui:
@@ -29,9 +35,15 @@ with gr.Blocks(title="Deep Research") as ui:
     gr.Examples(examples=EXAMPLES, inputs=query_textbox, elem_id="dr-examples")
 
     report = gr.Markdown(elem_id="dr-report")
+    report_file = gr.File(
+        label="Saved report",
+        visible=False,
+        interactive=False,
+        elem_id="dr-file",
+    )
 
-    run_button.click(run, inputs=query_textbox, outputs=report)
-    query_textbox.submit(run, inputs=query_textbox, outputs=report)
+    run_button.click(run, inputs=query_textbox, outputs=[report, report_file])
+    query_textbox.submit(run, inputs=query_textbox, outputs=[report, report_file])
 
 
 if __name__ == "__main__":
